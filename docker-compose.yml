@@ -1,0 +1,42 @@
+version: '2'
+#Menggunakan docker compose versi 2
+
+services:
+#Membuat service
+
+  item-app:
+  #Membuat service item:app
+
+    image: platad/item-app:v1
+    #Menggunakan image item-app dari docker hub
+    
+    restart: always
+    #Menerapkan restart policy agar container selalu restart ketika terhenti
+
+    ports:
+      - "80:8080"
+      #Melakukan port mapping dari port 80 di host ke port 8080 di container
+
+    depends_on:
+      - item-db
+      #Pastikam item-app hanya berjalan setelah item-db diluncurkan
+  
+  item-db:
+  #Membuat service item:db
+
+    image: mongo:3
+    #Menggunakan image monggo:3 dari docker hub
+
+    restart: always
+    #Menerapkan restart policy agar container selalu restart ketika terhenti
+
+    volumes:
+      - app-db:/data/db
+      #Memakai volume bernama app-db dengan target /data/db di container
+
+
+volumes:
+#Membuat volume
+
+  app-db:
+  #Membuat volume app-db
